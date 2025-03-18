@@ -21,8 +21,9 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/chayeonhee/helmchart.git'
             }
         }
-        state('configmap') {
+        stage('configmap') {
             steps {
+                //여러 helm release에서 공유 할수 있다.
                 sh "kubectl apply -f ./${COMMON_HELM_CHART_PATH}/templates/configmap.yaml || true"
             }
         }
