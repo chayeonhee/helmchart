@@ -31,7 +31,8 @@ pipeline {
 
                 script {
                     // ['eurekaserver','configserver'].each { service ->
-                    ['eurekaserver','configserver','accounts', 'cards', 'loans', 'gatewayserver'].each { service ->
+                    // ['eurekaserver','configserver','accounts', 'cards', 'loans', 'gatewayserver'].each { service ->
+                    ['configserver'].each { service ->
                         sh "helm dependency update ./eazybank-services/${service}/helm-chart"
                         sh "helm dependency build ./eazybank-services/${service}/helm-chart"
                     }
@@ -54,10 +55,6 @@ pipeline {
                         --namespace ${NAMESPACE} \
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                         -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
-                        --set cards.enabled=false \
-                        --set accounts.enabled=false \
-                        --set loans.enabled=false \
-                        --set gatewayserver.enabled=false \
                         --wait --timeout 10m0s"
 
                         sh "kubectl get pods --namespace ${NAMESPACE} "
