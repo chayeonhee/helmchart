@@ -57,7 +57,7 @@ pipeline {
                         -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
                         --wait --timeout 10m0s"
 
-                        sh "kubectl get pods --namespace ${NAMESPACE} "
+                        sh "kubectl get pods --namespace ${NAMESPACE} --replace"
                 }
             }
         }
