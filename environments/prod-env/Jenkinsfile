@@ -47,7 +47,7 @@ pipeline {
                         --set loans.enabled=false \
                         --reset-values \
                         --wait --timeout 10m0s --force" 
-
+                        sh "helm get values team6-cha-first-helm -n group1-team6"
                         sh "kubectl get pods --namespace ${NAMESPACE}"
                 }
             }
