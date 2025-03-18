@@ -10,7 +10,7 @@ pipeline {
         
         HELM_CHART_PATH="environments/prod-env"
         HELM_RELEASE_NAME="team6-cha-first-helm"
-
+        
     }
     stages {
         stage('Checkout') {
@@ -26,13 +26,14 @@ pipeline {
                 sh "helm dependency update ./${GLOBAL_HELM_CHART_PATH}"
                 sh "helm dependency build ./${GLOBAL_HELM_CHART_PATH}"
 
+                // yaml 파일 렌더링
                 sh "helm template ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
                   -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                   -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
                  --namespace ${NAMESPACE} --debug "
             }
         }
-        stage(' Eureka HELM Deploy and Service to Kubernetes') {
+        stage(' Eureka HELM Deploy') {
             steps {
                 script {
                         sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
@@ -48,7 +49,41 @@ pipeline {
             }
         }
 
-         stage(' First HELM Deploy and Service to Kubernetes') {
+        stage('Wait for Eureka Ready') {
+            steps {
+                script {
+                    def eurekaPodName = sh(script: "kubectl get pods -n ${NAMESPACE} -l app=eureka -o=jsonpath='{.items[0].metadata.name}'", returnStdout: true).trim()
+                    echo "Eureka Pod name: ${eurekaPodName}"
+                    
+                    // Eureka 로그가 "Eureka server is up"을 출력할 때까지 대기
+                    def isReady = false
+                    def counter = 0
+                    def maxRetries = 12  // 최대 분 (12 * 10초)
+                    
+                    // Eureka 로그에서 "Eureka server is up" 문자열이 나올 때까지 기다림
+                    while (!isReady && counter < maxRetries) {
+                        // Eureka 로그 확인
+                        def logs = sh(script: "kubectl logs -n ${NAMESPACE} ${eurekaPodName}", returnStdout: true).trim()
+                        
+                        // 로그에 'Eureka server is up'이 포함되어 있는지 확인
+                        if (logs.contains("Eureka server is up")) {
+                            isReady = true
+                            echo "Eureka is ready!"
+                        } else {
+                            counter++
+                            echo "Waiting for Eureka to be ready... Attempt ${counter}/${maxRetries}"
+                            sleep(10)  // 10초 대기 후 다시 시도
+                        }
+                    }
+
+                    // 최대 시도 횟수에 도달하면 실패 처리
+                    if (!isReady) {
+                        error "Eureka server did not become ready in time."
+                    }
+                }
+            }
+        }
+         stage(' ConfigServer HELM Deploy ') {
             steps {
                 script {
                         sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
@@ -64,7 +99,7 @@ pipeline {
                 }
             }
         }
-         stage(' Second HELM Deploy and Service to Kubernetes') {
+         stage(' Service HELM Deploy ') {
             steps {
                 script {
                         sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
