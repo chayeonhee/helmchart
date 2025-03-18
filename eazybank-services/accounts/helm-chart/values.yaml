@@ -14,3 +14,9 @@ image:
 
 service:
   nodePort: 30632
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 8098
+containerPort: 8098
