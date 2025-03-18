@@ -29,33 +29,33 @@ dependencies:
     repository: file://../../eazybank-common
     
     
-  - name: eurekaserver
-    version: 0.1.0
-    repository: file://../../eazybank-services/eurekaserver/helm-chart
-    condition: services.eurekaserver.enabled
+  # - name: eurekaserver
+  #   version: 0.1.0
+  #   repository: file://../../eazybank-services/eurekaserver/helm-chart
+  #   condition: services.eurekaserver.enabled
 
   - name: configserver
     version: 0.1.0
     repository: file://../../eazybank-services/configserver/helm-chart
-    condition: services.configserver.enabled
+    # condition: services.configserver.enabled
 
-  - name: accounts
-    version: 0.1.0
-    repository: file://../../eazybank-services/accounts/helm-chart
-    condition: services.accounts.enabled
+  # - name: accounts
+  #   version: 0.1.0
+  #   repository: file://../../eazybank-services/accounts/helm-chart
+  #   condition: services.accounts.enabled
 
-  - name: cards
-    version: 0.1.0
-    repository: file://../../eazybank-services/cards/helm-chart
-    condition: services.cards.enabled
+  # - name: cards
+  #   version: 0.1.0
+  #   repository: file://../../eazybank-services/cards/helm-chart
+  #   condition: services.cards.enabled
 
-  - name: loans
-    version: 0.1.0
-    repository: file://../../eazybank-services/loans/helm-chart
-    condition: services.loans.enabled
+  # - name: loans
+  #   version: 0.1.0
+  #   repository: file://../../eazybank-services/loans/helm-chart
+  #   condition: services.loans.enabled
 
-  - name: gatewayserver
-    version: 0.1.0
-    repository: file://../../eazybank-services/gatewayserver/helm-chart
-    condition: services.gatewayserver.enabled
+  # - name: gatewayserver
+  #   version: 0.1.0
+  #   repository: file://../../eazybank-services/gatewayserver/helm-chart
+  #   condition: services.gatewayserver.enabled
 
