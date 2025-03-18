@@ -10,7 +10,7 @@ pipeline {
         
         HELM_CHART_PATH="environments/prod-env"
         HELM_RELEASE_NAME_FIRST="team6-cha-first-helm"
-        HELM_RELEASE_NAME_SECOND="team6-cha-second-helm"
+        // HELM_RELEASE_NAME_SECOND="team6-cha-second-helm"
         // HELM_RELEASE_NAME="team6-cha-all-helm"
 
     }
@@ -73,12 +73,10 @@ pipeline {
         stage('Second Service HELM Deploy and Service to Kubernetes') {
             steps {
                 script {
-                        sh "helm upgrade --install ${HELM_RELEASE_NAME_SECOND} ${HELM_CHART_PATH} \
+                        sh "helm upgrade --install ${HELM_RELEASE_NAME_FIRST} ${HELM_CHART_PATH} \
                         --namespace ${NAMESPACE} \
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                         -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
-                        --set eurekaserver.enabled=false \
-                        --set configserver.enabled=false \
                         --wait --timeout 10m0s"
                 }
             }
