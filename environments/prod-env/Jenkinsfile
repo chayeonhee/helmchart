@@ -10,7 +10,7 @@ pipeline {
         
         HELM_CHART_PATH="environments/prod-env"
         HELM_RELEASE_NAME_FIRST="team6-cha-first-helm"
-        HELM_RELEASE_NAME_SECOND="team6-cha-all-helm"
+        HELM_RELEASE_NAME_SECOND="team6-cha-second-helm"
         // HELM_RELEASE_NAME="team6-cha-all-helm"
 
     }
