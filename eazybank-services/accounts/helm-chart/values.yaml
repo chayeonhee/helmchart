@@ -5,9 +5,8 @@ deploymentName: team6-account-pod-cha
 containerName: account-contain-cha
 serviceName: team6-account-cha-sv
 appLabel: account-lbl-cha
-# appName: accounts
 
-replicaCount: 3
+replicaCount: 1
 
 image:
   repository: group1-team6-cha-acc
