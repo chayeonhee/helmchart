@@ -14,18 +14,3 @@ global:
   # cardsURL: "team6-card-cha-sv:80"
   # loansURL: "team6-loan-cha-sv:80"
   privateReposityroURL: k8s-vga-worker1:5000
-
-  
-# services:
-#   eurekaserver:
-#     enabled: true
-#   configserver:
-#     enabled: true
-#   accounts:
-#     enabled: true
-#   cards:
-#     enabled: true
-#   loans:
-#     enabled: true
-#   gatewayserver:
-#     enabled: true
