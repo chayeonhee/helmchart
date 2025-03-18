@@ -41,10 +41,6 @@ pipeline {
                         -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
                         --set eurekaserver.enabled=true \
                         --set configserver.enabled=true \
-                        --set gatewayserver.enabled=false \
-                        --set accounts.enabled=false \
-                        --set cards.enabled=false \
-                        --set loans.enabled=false \
                         --reset-values \
                         --wait --timeout 10m0s --force" 
                         sh "helm get values team6-cha-first-helm -n group1-team6"
@@ -59,8 +55,8 @@ pipeline {
                         --namespace ${NAMESPACE} \
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                         -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
-                        --set eurekaserver.enabled=false \
-                        --set configserver.enabled=false \
+                        --set eurekaserver.enabled=true \
+                        --set configserver.enabled=true \
                         --set gatewayserver.enabled=true \
                         --set accounts.enabled=true \
                         --set cards.enabled=true \
