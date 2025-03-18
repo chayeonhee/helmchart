@@ -52,7 +52,7 @@ pipeline {
         stage('Wait for Eureka Ready') {
             steps {
                 script {
-                    def eurekaPodName = sh(script: "kubectl get pods -n ${NAMESPACE} -l app=eureka -o=jsonpath='{.items[0].metadata.name}'", returnStdout: true).trim()
+                    def eurekaPodName = sh(script: "kubectl get pods -n ${NAMESPACE} | grep team6-eureka-pod-cha | awk '{print \$1}'", returnStdout: true).trim()
                     echo "Eureka Pod name: ${eurekaPodName}"
                     
                     // Eureka 로그가 "Eureka server is up"을 출력할 때까지 대기
