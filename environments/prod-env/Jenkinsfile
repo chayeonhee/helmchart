@@ -24,17 +24,17 @@ pipeline {
             steps {
                 //Chart.yaml이 있는 디렉토리에서 실행
                 // sh "helm uninstall team6-cha-account-helm -n group1-team6"
-                sh "helm dependency update ./${COMMON_HELM_CHART_PATH}"
-                sh "helm dependency build ./${COMMON_HELM_CHART_PATH}"
+                // sh "helm dependency update ./${COMMON_HELM_CHART_PATH}"
+                // sh "helm dependency build ./${COMMON_HELM_CHART_PATH}"
 
-                script {
-                    ['eurekaserver','configserver','accounts', 'cards', 'loans', 'gatewayserver'].each { service ->
-                        sh "helm dependency update ./eazybank-services/${service}/helm-chart"
-                        sh "helm dependency build ./eazybank-services/${service}/helm-chart"
-                    }
-                }
-                sh "helm dependency update ./${HELM_CHART_PATH}"
-                sh "helm dependency build ./${HELM_CHART_PATH}"
+                // // script {
+                // //     ['eurekaserver','configserver','accounts', 'cards', 'loans', 'gatewayserver'].each { service ->
+                // //         sh "helm dependency update ./eazybank-services/${service}/helm-chart"
+                // //         sh "helm dependency build ./eazybank-services/${service}/helm-chart"
+                // //     }
+                // // }
+                // sh "helm dependency update ./${HELM_CHART_PATH}"
+                // sh "helm dependency build ./${HELM_CHART_PATH}"
 
 
 
@@ -42,6 +42,7 @@ pipeline {
                   -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                   -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
                  --namespace ${NAMESPACE} --debug "
+                 //--set loans.enabled=false 
                
             }
         }
