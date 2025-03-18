@@ -51,7 +51,7 @@ pipeline {
                         --namespace ${NAMESPACE} \
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                         -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
-                        --wait --timeout 10m0s --recreate-pods --replace" 
+                        --wait --timeout 10m0s --recreate-pods" 
 
                         sh "kubectl get pods --namespace ${NAMESPACE}"
                 }
