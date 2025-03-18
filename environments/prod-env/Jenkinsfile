@@ -35,7 +35,7 @@ pipeline {
          stage(' First HELM Deploy and Service to Kubernetes') {
             steps {
                 script {
-                        sh "helm install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
+                        sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
                         --namespace ${NAMESPACE} \
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                         -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
@@ -45,6 +45,7 @@ pipeline {
                         --set accounts.enabled=false \
                         --set cards.enabled=false \
                         --set loans.enabled=false \
+                        -reset-values \
                         --wait --timeout 10m0s --force" 
 
                         sh "kubectl get pods --namespace ${NAMESPACE}"
@@ -64,7 +65,7 @@ pipeline {
                         --set accounts.enabled=true \
                         --set cards.enabled=true \
                         --set loans.enabled=true \
-                        --reuse-values \
+                        -reset-values \
                         --wait --timeout 10m0s --force" 
 
                         sh "kubectl get pods --namespace ${NAMESPACE}"
