@@ -16,7 +16,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Git 저장소에서 소스 코드 체크아웃 (branch 지정 : 본인 repository의 branch 이름으로 설정)
-                git branch: 'main', url: 'https://github.com/chayeonhee/msa2.git'
+                git branch: 'main', url: 'https://github.com/chayeonhee/helmchart.git'
             }
         }
         
@@ -28,7 +28,8 @@ pipeline {
                 sh "helm dependency build ./${COMMON_HELM_CHART_PATH}"
 
                 script {
-                    ['accounts', 'cards', 'loans', 'gatewayserver'].each { service ->
+                    // ['accounts', 'cards', 'loans', 'gatewayserver'].each { service ->
+                    ['accounts'].each { service ->
                         sh "helm dependency update ./eazybank-services/${service}/helm-chart"
                         sh "helm dependency build ./eazybank-services/${service}/helm-chart"
                     }
