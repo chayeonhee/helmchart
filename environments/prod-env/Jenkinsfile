@@ -66,7 +66,7 @@ pipeline {
                         def logs = sh(script: "kubectl logs -n ${NAMESPACE} ${eurekaPodName}", returnStdout: true).trim()
                         
                         // 로그에 'Completed initialization'이 포함되어 있는지 확인
-                        if (logs.contains("Completed initialization")) {
+                        if (logs.contains("Started ServerApplication")) {
                             isReady = true
                             echo "Eureka is ready!"
                         } else {
