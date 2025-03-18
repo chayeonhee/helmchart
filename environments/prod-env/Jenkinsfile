@@ -41,12 +41,6 @@ pipeline {
                 sh "helm template ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
                   -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                   -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
-                 --set eurekaserver.enabled=true \
-                 --set configserver.enabled=true \
-                 --set accounts.enabled=true \
-                 --set loans.enabled=true \
-                 --set cards.enabled=true \
-                 --set gatewayserver.enabled=true \
                  --namespace ${NAMESPACE} --debug "
                   
                
@@ -59,9 +53,13 @@ pipeline {
                         --namespace ${NAMESPACE} \
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                         -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
-                         --set eurekaserver.enabled=true \
-                        --set configserver.enabled=true \
+                        --set cards.enabled=false \
+                        --set loans.enabled=false \
+                        --set accounts.enabled=false \
+                        --set gatewayserver.enabled=false \
                         --wait --timeout 10m0s"
+
+                        sh "kubectl get pods --namespace ${NAMESPACE} | grep cha | grep server "
                 }
             }
         }
@@ -72,10 +70,8 @@ pipeline {
                         --namespace ${NAMESPACE} \
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                         -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
-                         --set cards.enabled=true \
-                        --set loans.enabled=true \
-                        --set accounts.enabled=true \
-                        --set gatewayserver.enabled=true \
+                           --set eurekaserver.enabled=false \
+                        --set configserver.enabled=false \
                         --wait --timeout 10m0s"
                 }
             }
