@@ -40,6 +40,21 @@ pipeline {
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                         -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
                         --set eurekaserver.enabled=true \
+                        --reset-values \
+                        --wait --timeout 10m0s --force" 
+                        sh "helm get values team6-cha-first-helm -n group1-team6"
+                        sh "kubectl get pods --namespace ${NAMESPACE}"
+                }
+            }
+        }
+         stage(' Sec HELM Deploy and Service to Kubernetes') {
+            steps {
+                script {
+                        sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
+                        --namespace ${NAMESPACE} \
+                        -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
+                        -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
+                        --set eurekaserver.enabled=true \
                         --set configserver.enabled=true \
                         --reset-values \
                         --wait --timeout 10m0s --force" 
