@@ -20,12 +20,12 @@ services:
   eurekaserver:
     enabled: false
   configserver:
-    enabled: true
+    enabled: false
   accounts:
-    enabled: false
+    enabled: true
   cards:
-    enabled: false
+    enabled: true
   loans:
-    enabled: false
+    enabled: true
   gatewayserver:
-    enabled: false
+    enabled: true
