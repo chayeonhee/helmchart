@@ -9,7 +9,9 @@ pipeline {
         GLOBAL_HELM_CHART_PATH="environments/prod-env"
         
         HELM_CHART_PATH="environments/prod-env"
-        HELM_RELEASE_NAME="team6-cha-all-helm"
+        HELM_RELEASE_NAME_FIRST="team6-cha-first-helm"
+        HELM_RELEASE_NAME_SECOND="team6-cha-all-helm"
+        // HELM_RELEASE_NAME="team6-cha-all-helm"
 
     }
     stages {
@@ -25,35 +27,37 @@ pipeline {
                 //Chart.yaml이 있는 디렉토리에서 실행
                 // sh "helm uninstall team6-cha-account-helm -n group1-team6"
                 sh "helm dependency update ./${COMMON_HELM_CHART_PATH}"
-                sh "helm dependency build ./${COMMON_HELM_CHART_PATH}"
+                // sh "helm dependency build ./${COMMON_HELM_CHART_PATH}"
 
                 script {
                     // ['eurekaserver','configserver'].each { service ->
-                    ['accounts', 'cards', 'loans', 'gatewayserver'].each { service ->
+                    ['eurekaserver','configserver','accounts', 'cards', 'loans', 'gatewayserver'].each { service ->
                         sh "helm dependency update ./eazybank-services/${service}/helm-chart"
-                        sh "helm dependency build ./eazybank-services/${service}/helm-chart"
+                        // sh "helm dependency build ./eazybank-services/${service}/helm-chart"
                     }
                 }
                 sh "helm dependency update ./${HELM_CHART_PATH}"
-                sh "helm dependency build ./${HELM_CHART_PATH}"
+                // sh "helm dependency build ./${HELM_CHART_PATH}"
 
 
 
-                sh "helm template ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
+                sh "helm template ${HELM_RELEASE_NAME_FIRST} ${HELM_CHART_PATH} \
                   -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                   -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
                  --namespace ${NAMESPACE} --debug "
-                  
-               
             }
         }
-         stage(' HELM Deploy and Service to Kubernetes') {
+         stage(' First HELM Deploy and Service to Kubernetes') {
             steps {
                 script {
-                        sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
+                        sh "helm upgrade --install ${HELM_RELEASE_NAME_FIRST} ${HELM_CHART_PATH} \
                         --namespace ${NAMESPACE} \
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                         -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
+                          --set cards.enabled=false \
+                        --set accounts.enabled=false \
+                        --set loans.enabled=false \
+                        --set gatewayserver.enabled=false \
                         --wait --timeout 10m0s"
 
                         sh "kubectl get pods --namespace ${NAMESPACE} "
@@ -61,18 +65,18 @@ pipeline {
             }
         }
         
-        // stage('Third Service HELM Deploy and Service to Kubernetes') {
-        //     steps {
-        //         script {
-        //                 sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
-        //                 --namespace ${NAMESPACE} \
-        //                 -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
-        //                 -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
-        //                    --set eurekaserver.enabled=false \
-        //                 --set configserver.enabled=false \
-        //                 --wait --timeout 10m0s"
-        //         }
-        //     }
-        // }
+        stage('Second Service HELM Deploy and Service to Kubernetes') {
+            steps {
+                script {
+                        sh "helm upgrade --install ${HELM_RELEASE_NAME_SECOND} ${HELM_CHART_PATH} \
+                        --namespace ${NAMESPACE} \
+                        -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
+                        -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
+                        --set eurekaserver.enabled=false \
+                        --set configserver.enabled=false \
+                        --wait --timeout 10m0s"
+                }
+            }
+        }
     }
 }
