@@ -47,6 +47,7 @@ dependencies:
     condition: accounts.enabled
     dependsOn:
       - configserver
+      - eurekaserver
 
   - name: cards
     version: 0.1.0
@@ -54,6 +55,7 @@ dependencies:
     condition: cards.enabled
     dependsOn:
       - configserver
+      - eurekaserver
 
   - name: loans
     version: 0.1.0
@@ -61,6 +63,7 @@ dependencies:
     condition: loans.enabled
     dependsOn:
       - configserver
+      - eurekaserver
       
   - name: gatewayserver
     version: 0.1.0
