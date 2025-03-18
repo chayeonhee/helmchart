@@ -3,6 +3,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Values.global.configMapName }}
+  annotations:
+    "helm.sh/resource-policy": "keep"
 data:
   SPRING_PROFILES_ACTIVE: {{ .Values.global.activeProfile }}
   SPRING_EUREKA_URL: {{ .Values.global.eurekaServerURL }}
