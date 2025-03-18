@@ -22,10 +22,10 @@ services:
   configserver:
     enabled: false
   accounts:
-    enabled: true
+    enabled: false
   cards:
-    enabled: true
+    enabled: false
   loans:
-    enabled: true
+    enabled: false
   gatewayserver:
-    enabled: true
+    enabled: false

@@ -41,18 +41,41 @@ pipeline {
                 sh "helm template ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
                   -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                   -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
+                 --set eurekaserver.enabled=true \
+                 --set configserver.enabled=true \
+                 --set accounts.enabled=true \
+                 --set loans.enabled=true \
+                 --set cards.enabled=true \
+                 --set gatewayserver.enabled=true \
                  --namespace ${NAMESPACE} --debug "
-                 //--set loans.enabled=false 
+                  
                
             }
         }
-         stage('HELM Deploy and Service to Kubernetes') {
+         stage('First HELM Deploy and Service to Kubernetes') {
             steps {
                 script {
                         sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
                         --namespace ${NAMESPACE} \
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                         -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
+                         --set eurekaserver.enabled=true \
+                        --set configserver.enabled=true \
+                        --wait --timeout 10m0s"
+                }
+            }
+        }
+        stage('Second HELM Deploy and Service to Kubernetes') {
+            steps {
+                script {
+                        sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
+                        --namespace ${NAMESPACE} \
+                        -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
+                        -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
+                         --set cards.enabled=true \
+                        --set loans.enabled=true \
+                        --set accounts.enabled=true \
+                        --set gatewayserver.enabled=true \
                         --wait --timeout 10m0s"
                 }
             }
