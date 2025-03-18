@@ -29,15 +29,15 @@ dependencies:
     repository: file://../../eazybank-common
     
     
-  - name: eurekaserver
-    version: 0.1.0
-    repository: file://../../eazybank-services/eurekaserver/helm-chart
-    condition: services.eurekaserver.enabled
-
-  # - name: configserver
+  # - name: eurekaserver
   #   version: 0.1.0
-  #   repository: file://../../eazybank-services/configserver/helm-chart
-  #   condition: services.configserver.enabled
+  #   repository: file://../../eazybank-services/eurekaserver/helm-chart
+  #   condition: services.eurekaserver.enabled
+
+  - name: configserver
+    version: 0.1.0
+    repository: file://../../eazybank-services/configserver/helm-chart
+    condition: services.configserver.enabled
 
   # - name: accounts
   #   version: 0.1.0
