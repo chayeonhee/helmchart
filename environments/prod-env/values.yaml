@@ -1,8 +1,8 @@
-env:
- - name: JAVA_HOME
-   value: "/usr/local/java21"
- - name: PATH
-   value: "${JAVA_HOME}/bin:${env.PATH}"
+# env:
+#  - name: JAVA_HOME
+#    value: "/usr/local/java21"
+#  - name: PATH
+#    value: "${JAVA_HOME}/bin:${env.PATH}"
 global:
   namespace: group1-team6
   configMapName: team6-cha-configmap
