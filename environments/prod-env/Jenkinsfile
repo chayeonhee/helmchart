@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+    environment {
+        NAMESPACE = 'group1-team6'
+        JAVA_HOME = '/tmp/jdk-21.0.5'
+        PATH = "${JAVA_HOME}/bin:${env.PATH}"
+
+        COMMON_HELM_CHART_PATH="eazybank-common"
+        GLOBAL_HELM_CHART_PATH="environments/prod-env"
+        
+        HELM_CHART_PATH="environments/prod-env"
+        HELM_RELEASE_NAME="team6-cha-all-helm"
+
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                // Git 저장소에서 소스 코드 체크아웃 (branch 지정 : 본인 repository의 branch 이름으로 설정)
+                git branch: 'main', url: 'https://github.com/chayeonhee/msa2.git'
+            }
+        }
+        
+         stage('Helm Dependency Update') {
+            steps {
+                //Chart.yaml이 있는 디렉토리에서 실행
+                // sh "helm uninstall team6-cha-account-helm -n group1-team6"
+                sh "helm dependency update ./${COMMON_HELM_CHART_PATH}"
+                sh "helm dependency build ./${COMMON_HELM_CHART_PATH}"
+
+                script {
+                    ['accounts', 'cards', 'loans', 'gatewayserver'].each { service ->
+                        sh "helm dependency update ./eazybank-services/${service}/helm-chart"
+                        sh "helm dependency build ./eazybank-services/${service}/helm-chart"
+                    }
+                }
+                sh "helm dependency update ./${HELM_CHART_PATH}"
+                sh "helm dependency build ./${HELM_CHART_PATH}"
+
+
+
+                sh "helm template ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
+                  -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
+                  -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
+                 --namespace ${NAMESPACE} --debug "
+               
+            }
+        }
+         stage('HELM Deploy and Service to Kubernetes') {
+            steps {
+                script {
+                        sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
+                        --namespace ${NAMESPACE} \
+                        -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
+                        -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
+                        --wait --timeout 10m0s"
+                }
+            }
+        }
+    }
+}
