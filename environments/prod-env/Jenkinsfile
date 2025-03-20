@@ -43,7 +43,7 @@ pipeline {
         stage(' Eureka HELM Deploy') {
             steps {
                 script {
-                        sh "kubectl -n group1-team6 delete pod wait-for-eureka | true"
+                        // sh "kubectl -n group1-team6 delete pod wait-for-eureka | true"
                         sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
                         --namespace ${NAMESPACE} \
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
@@ -77,7 +77,7 @@ pipeline {
         stage(' Service HELM Deploy ') {
             steps {
                 script {
-                        sh "kubectl -n group1-team6 delete pod wait-for-eureka  | true"
+                        // sh "kubectl -n group1-team6 delete pod wait-for-eureka  | true"
                         sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
                         --namespace ${NAMESPACE} \
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
