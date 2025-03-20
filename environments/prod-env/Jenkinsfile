@@ -50,7 +50,7 @@ pipeline {
                         --reset-values \
                         --set eurekaserver.enabled=true \
                         --set configserver.enabled=false \
-                        --wait --timeout 10m0s"
+                        --wait --timeout 10m0s --force"
                         // sh "helm get values team6-cha-first-helm -n group1-team6"
                         sh "kubectl get pods --namespace ${NAMESPACE}"
                 }
@@ -66,7 +66,7 @@ pipeline {
                         --reset-values \
                         --set eurekaserver.enabled=false \
                         --set configserver.enabled=true \
-                        --wait --timeout 10m0s"
+                        --wait --timeout 10m0s --force"
                         // sh "helm get values team6-cha-first-helm -n group1-team6"
                         sh "kubectl get pods --namespace ${NAMESPACE}"
                 }
