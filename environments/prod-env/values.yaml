@@ -17,15 +17,15 @@ global:
 
 
 # services:
-eurekaserver:
-  enabled: false
-configserver:
-  enabled: false
-accounts:
-  enabled: false
-cards:
-  enabled: false
-loans:
-  enabled: false
-gatewayserver:
-  enabled: false
+# eurekaserver:
+#   enabled: false
+# configserver:
+#   enabled: false
+# accounts:
+#   enabled: false
+# cards:
+#   enabled: false
+# loans:
+#   enabled: false
+# gatewayserver:
+#   enabled: false
