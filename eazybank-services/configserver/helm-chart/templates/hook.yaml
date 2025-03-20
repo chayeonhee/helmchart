@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: wait-for-configserver
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  template:
+    spec:
+      containers:
+        - name: wait-for-configserver
+          image: busybox
+          command: ['sh', '-c', 'until nc -z {{ .Values.serviceName }} {{ .Values.service.port }}; do sleep 5; done']
+          restartPolicy: Never
