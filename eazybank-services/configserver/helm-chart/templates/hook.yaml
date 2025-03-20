@@ -12,5 +12,5 @@ spec:
       containers:
         - name: wait-for-configserver
           image: busybox
-          command: ['sh', '-c', 'until nc -z {{ .Values.serviceName }} {{ .Values.service.port }}; do sleep 5; done']
+          command: ['sh', '-c', 'until nc -z {{ .Values.serviceName }} {{ .Values.eazybankcommon.service.port }}; do sleep 5; done']
           restartPolicy: Never

@@ -40,20 +40,20 @@ pipeline {
                  --namespace ${NAMESPACE} --debug "
             }
         }
-        stage(' Eureka HELM Deploy') {
-            steps {
-                script {
-                        sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
-                        --namespace ${NAMESPACE} \
-                        -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
-                        -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
-                        --reset-values \
-                        --wait --timeout 10m0s" 
-                        // sh "helm get values team6-cha-first-helm -n group1-team6"
-                        sh "kubectl get pods --namespace ${NAMESPACE}"
-                }
-            }
-        }
+        // stage(' Eureka HELM Deploy') {
+        //     steps {
+        //         script {
+        //                 sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
+        //                 --namespace ${NAMESPACE} \
+        //                 -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
+        //                 -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
+        //                 --reset-values \
+        //                 --wait --timeout 10m0s" 
+        //                 // sh "helm get values team6-cha-first-helm -n group1-team6"
+        //                 sh "kubectl get pods --namespace ${NAMESPACE}"
+        //         }
+        //     }
+        // }
 
         // stage('Wait for Eureka Ready') {
         //     steps {
