@@ -10,7 +10,9 @@ global:
   # eurekaServerURL: "team6-eureka-cha-sv:80"
   eurekaServiceName: "team6-eureka-cha-sv"
   eurekaServicePort: "80"
-  configServerURL: "team6-cfg-cha-sv:80"
+  # configServerURL: "team6-cfg-cha-sv:80"
+  configServiceName: "team6-cfg-cha-sv"
+  configServicePort: "80"
   # gatewayServerURL: "team6-gw-cha-sv:80"
   # accountsURL: "team6-account-cha-sv:80"
   # cardsURL: "team6-card-cha-sv:80"
@@ -19,15 +21,15 @@ global:
 
 
 # services:
-# eurekaserver:
-#   enabled: false
-# configserver:
-#   enabled: false
-# accounts:
-#   enabled: false
-# cards:
-#   enabled: false
-# loans:
-#   enabled: false
-# gatewayserver:
-#   enabled: false
+eurekaserver:
+  enabled: false
+configserver:
+  enabled: false
+accounts:
+  enabled: false
+cards:
+  enabled: false
+loans:
+  enabled: false
+gatewayserver:
+  enabled: false
