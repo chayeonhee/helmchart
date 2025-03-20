@@ -54,6 +54,13 @@ pipeline {
                 }
             }
         }
+        stage('restart'){
+            steps{
+                script{
+                    sh 'kubectl -n group1-team6 rollout restart deployment/team6-cfg-pod-cha'
+                }
+            }
+        }
 
         // stage('Wait for Eureka Ready') {
         //     steps {
