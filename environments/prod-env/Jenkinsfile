@@ -48,7 +48,7 @@ pipeline {
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
                         -f ./${COMMON_HELM_CHART_PATH}/values.yaml \
                         --reset-values \
-                        --wait --timeout 10m0s --force" 
+                        --wait --timeout 10m0s" 
                         // sh "helm get values team6-cha-first-helm -n group1-team6"
                         sh "kubectl get pods --namespace ${NAMESPACE}"
                 }
