@@ -41,10 +41,10 @@ dependencies:
     dependsOn:
       - eurekaserver
 
-  # - name: accounts
-  #   version: 0.1.0
-  #   repository: file://../../eazybank-services/accounts/helm-chart
-  #   condition: accounts.enabled
+  - name: accounts
+    version: 0.1.0
+    repository: file://../../eazybank-services/accounts/helm-chart
+    condition: accounts.enabled
   #   dependsOn:
   #     - configserver
   #     - eurekaserver
