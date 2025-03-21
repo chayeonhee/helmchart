@@ -49,10 +49,10 @@ dependencies:
   #     - configserver
   #     - eurekaserver
 
-  # - name: cards
-  #   version: 0.1.0
-  #   repository: file://../../eazybank-services/cards/helm-chart
-  #   condition: cards.enabled
+  - name: cards
+    version: 0.1.0
+    repository: file://../../eazybank-services/cards/helm-chart
+    condition: cards.enabled
   # #   dependsOn:
   # #     - configserver
   # #     - eurekaserver
