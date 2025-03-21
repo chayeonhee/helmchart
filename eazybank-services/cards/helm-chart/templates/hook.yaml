@@ -7,11 +7,19 @@ metadata:
     "helm.sh/hook-weight": "3"
     "helm.sh/hook-delete-policy": hook-succeeded #before-hook-creation
 spec:
-  restartPolicy: Never
-  containers:
-    - name: wait-for-config-from-cards-cha
-      image: busybox
-      command: ['sh', '-c', 'until nc -z {{ .Values.global.configServiceName }} {{ .Values.global.configServicePort }}; do sleep 5; done']
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: wait-for-config-from-cards-cha
+          image: busybox
+          command: ['sh', '-c', 'until nc -z {{ .Values.global.configServiceName }} {{ .Values.global.configServicePort }}; do sleep 5; done']
+# spec:
+#   restartPolicy: Never
+#   containers:
+#     - name: wait-for-config-from-cards-cha
+#       image: busybox
+#       command: ['sh', '-c', 'until nc -z {{ .Values.global.configServiceName }} {{ .Values.global.configServicePort }}; do sleep 5; done']
   # template:
   #   spec:
   #     containers:

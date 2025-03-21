@@ -7,12 +7,19 @@ metadata:
     "helm.sh/hook-weight": "0"
     "helm.sh/hook-delete-policy": hook-succeeded #before-hookcreation
 spec:
-  restartPolicy: Never
-  containers:
-    - name: wait-for-eureka-cha
-      image: busybox
-      # command: ['sh', '-c', 'until nc -z team6-eureka-cha-sv 80; do sleep 5; done']
-      command: ['sh', '-c', 'until nc -z {{ .Values.global.eurekaServiceName }} {{ .Values.global.eurekaServicePort }}; do sleep 5; done']
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: wait-for-eureka-cha
+          image: busybox
+          command: ['sh', '-c', 'until nc -z {{ .Values.global.eurekaServiceName }} {{ .Values.global.eurekaServicePort }}; do sleep 5; done']
+# spec:
+#   restartPolicy: Never
+#   containers:
+#     - name: wait-for-eureka-cha
+#       image: busybox
+#       command: ['sh', '-c', 'until nc -z {{ .Values.global.eurekaServiceName }} {{ .Values.global.eurekaServicePort }}; do sleep 5; done']
       
   # template:
   #   spec:
