@@ -42,7 +42,7 @@ pipeline {
                   --set accounts.enabled=true \
                   --set cards.enabled=true \
                   --set loans.enabled=true \
-                   -set gatewayserver.enabled=true \
+                  --set gatewayserver.enabled=true \
                  --namespace ${NAMESPACE} --debug "
             }
         }
@@ -93,7 +93,7 @@ pipeline {
                         --set loans.enabled=true \
                         --set gatewayserver.enabled=true \
                         --reset-values \
-                        --wait --timeout 10m0s --force"
+                        --wait --timeout 5m0s --force"
 
                         sh "kubectl get pods --namespace ${NAMESPACE}"
                 }
