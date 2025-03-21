@@ -13,7 +13,7 @@ spec:
       containers:
         - name: wait-for-config-from-gw-cha
           image: busybox
-          command: ['sh', '-c', 'until nc -z {{ .Values.global.eurekaServiceName }} {{ .Values.global.eureakServicePort }}; do sleep 5; done']
+          command: ['sh', '-c', 'until nc -z {{ .Values.global.eurekaServiceName }} {{ .Values.global.eurekaServicePort }}; do sleep 5; done']
 # spec:
 #   restartPolicy: Never
 #   containers:
