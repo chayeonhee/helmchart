@@ -84,6 +84,8 @@ pipeline {
                         --set configserver.enabled=true \
                         --set accounts.enabled=true \
                         --set cards.enabled=true \
+                        --set loans.enabled=true \
+                        --set gatewayserver.enabled=true \
                         --reset-values \
                         --wait --timeout 10m0s --force"
 
