@@ -49,24 +49,24 @@ dependencies:
   #     - configserver
   #     - eurekaserver
 
-  - name: cards
-    version: 0.1.0
-    repository: file://../../eazybank-services/cards/helm-chart
-    condition: cards.enabled
-  #   dependsOn:
-  #     - configserver
-  #     - eurekaserver
+  # - name: cards
+  #   version: 0.1.0
+  #   repository: file://../../eazybank-services/cards/helm-chart
+  #   condition: cards.enabled
+  # #   dependsOn:
+  # #     - configserver
+  # #     - eurekaserver
 
-  - name: loans
-    version: 0.1.0
-    repository: file://../../eazybank-services/loans/helm-chart
-    condition: loans.enabled
-  #   dependsOn:
-  #     - configserver
-  #     - eurekaserver
+  # - name: loans
+  #   version: 0.1.0
+  #   repository: file://../../eazybank-services/loans/helm-chart
+  #   condition: loans.enabled
+  # #   dependsOn:
+  # #     - configserver
+  # #     - eurekaserver
       
-  - name: gatewayserver
-    version: 0.1.0
-    repository: file://../../eazybank-services/gatewayserver/helm-chart
-    condition: gatewayserver.enabled
+  # - name: gatewayserver
+  #   version: 0.1.0
+  #   repository: file://../../eazybank-services/gatewayserver/helm-chart
+  #   condition: gatewayserver.enabled
 
