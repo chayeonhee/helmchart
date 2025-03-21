@@ -1,11 +1,11 @@
-apiVersion: v1 #batch/v1
-kind: Pod  #Job
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: wait-for-config-from-loans-cha
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade
     "helm.sh/hook-weight": "2"
-    "helm.sh/hook-delete-policy": before-hook-creation
+    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   restartPolicy: Never
   containers:

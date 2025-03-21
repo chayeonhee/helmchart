@@ -43,8 +43,7 @@ pipeline {
         stage(' Eureka HELM Deploy') {
             steps {
                 script {
-                        // sh "kubectl -n ${NAMESPACE} delete pod wait-for-eureka-cha | true"
-                        sh "kubectl get pods -n ${NAMESPACE} | grep 'wait-for' | awk '{print \$1}' | xargs kubectl delete pod -n ${NAMESPACE} "
+                        // sh "kubectl get pods -n ${NAMESPACE} | grep 'wait-for' | awk '{print \$1}' | xargs kubectl delete pod -n ${NAMESPACE} "
                         sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
                         --namespace ${NAMESPACE} \
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
@@ -76,7 +75,7 @@ pipeline {
         stage(' Service HELM Deploy ') {
             steps {
                 script {
-                        sh "kubectl get pods -n ${NAMESPACE} | grep 'wait-for' | awk '{print \$1}' | xargs kubectl delete pod -n ${NAMESPACE} "
+                        // sh "kubectl get pods -n ${NAMESPACE} | grep 'wait-for' | awk '{print \$1}' | xargs kubectl delete pod -n ${NAMESPACE} "
                         sh "helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
                         --namespace ${NAMESPACE} \
                         -f ./${GLOBAL_HELM_CHART_PATH}/values.yaml \
